@@ -10,6 +10,7 @@ public class KeyNameUtil {
     public static final String PROJECT_ID = "MyBatisLogPlugin";
     public static final String PREPARING = "Preparing:";
     public static final String PARAMETERS = "Parameters:";
+    public static final String TOTAL = "Total:";
     public static final String LINE = " ";
     /**
      * 无法格式输出
@@ -24,6 +25,11 @@ public class KeyNameUtil {
      * 存储的key名称
      */
     public static final String DB_PARAMETERS_KEY = PROJECT_ID + "parameters";
+
+    /**
+     * 存储的key名称
+     */
+    public static final String DB_TOTAL_KEY = PROJECT_ID + "total";
     /**
      * 存储的key名称 是否允许运行
      */

@@ -23,6 +23,7 @@ public class FilterSetting extends JDialog {
     private JButton buttonCancel;
     private JTextField preparingTextField;
     private JTextField parametersTextField;
+    private JTextField totalTextField;
     private JCheckBox startupCheckBox;
 
     /**
@@ -35,6 +36,7 @@ public class FilterSetting extends JDialog {
         this.setTitle("Filter Setting");
         this.preparingTextField.setText(ConfigUtil.getPreparing());
         this.parametersTextField.setText(ConfigUtil.getParameters());
+        this.totalTextField.setText(ConfigUtil.getTotal());
         int startup = PropertiesComponent.getInstance(project).getInt(KeyNameUtil.DB_STARTUP_KEY, 1);
         startupCheckBox.setSelected(startup == 1);
         setContentPane(contentPane);
@@ -60,8 +62,10 @@ public class FilterSetting extends JDialog {
     private void onOK(Project project) {
         String preparing = this.preparingTextField.getText();
         String parameters = this.parametersTextField.getText();
+        String total = this.totalTextField.getText();
         ConfigUtil.setPreparing(preparing, KeyNameUtil.PREPARING);
         ConfigUtil.setParameters(parameters, KeyNameUtil.PARAMETERS);
+        ConfigUtil.setTotal(total, KeyNameUtil.TOTAL);
         ConfigUtil.setStartup(startupCheckBox.isSelected() ? 1 : 0);
         this.setVisible(false);
     }

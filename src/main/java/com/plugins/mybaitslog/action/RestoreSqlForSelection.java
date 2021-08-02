@@ -41,11 +41,12 @@ public class RestoreSqlForSelection extends AnAction {
         ConfigUtil.setShowMyBatisLog(project);
         final String preparing = ConfigUtil.getPreparing();
         final String parameters = ConfigUtil.getParameters();
+        final String total = ConfigUtil.getTotal();
         if (StringUtils.isNotEmpty(selectedText)) {
             //分割每一行
             String[] selectedRowText = selectedText.split("\n");
-            if (isKeyWord(project, selectedText, selectedRowText, preparing, parameters)) {
-                setFormatSelectedText(project, selectedRowText, preparing, parameters);
+            if (isKeyWord(project, selectedText, selectedRowText, preparing, parameters,total)) {
+                setFormatSelectedText(project, selectedRowText, preparing, parameters,total);
             }
         }
     }
@@ -65,10 +66,10 @@ public class RestoreSqlForSelection extends AnAction {
      * @param preparing       关键字
      * @param parameters      关键字
      */
-    private boolean isKeyWord(Project project, String selectedText, String[] selectedRowText, String preparing, String parameters) {
-        if (StringUtils.isNotBlank(selectedText) && selectedText.contains(preparing) && selectedText.contains(parameters)) {
+    private boolean isKeyWord(Project project, String selectedText, String[] selectedRowText, String preparing, String parameters,String total) {
+        if (StringUtils.isNotBlank(selectedText) && selectedText.contains(preparing) && selectedText.contains(parameters) && selectedText.contains(total)) {
             //必须大于两行,MyBatis输出有两行关键信息
-            if (selectedRowText.length >= 2) {
+            if (selectedRowText.length >= 3) {
                 return true;
             }
         }
@@ -85,7 +86,7 @@ public class RestoreSqlForSelection extends AnAction {
      * @param preparing       关键字
      * @param parameters      关键字
      */
-    private void setFormatSelectedText(Project project, String[] selectedRowText, String preparing, String parameters) {
+    private void setFormatSelectedText(Project project, String[] selectedRowText, String preparing, String parameters,String total) {
         String preparingLine = "";
         String parametersLine = "";
         for (int i = 0; i < selectedRowText.length; ++i) {
@@ -103,7 +104,7 @@ public class RestoreSqlForSelection extends AnAction {
             }
             if (StringUtils.isNotEmpty(preparingLine) && StringUtils.isNotEmpty(parametersLine)) {
                 //SQL还原
-                String[] restoreSql = SqlProUtil.restoreSql(preparingLine, parametersLine);
+                String[] restoreSql = SqlProUtil.restoreSql(preparingLine, parametersLine,total);
                 PrintlnUtil.println(project, KeyNameUtil.SQL_Line + restoreSql[0], ConsoleViewContentType.USER_INPUT);
                 //高亮显示
                 PrintlnUtil.printlnSqlType(project, restoreSql[1]);

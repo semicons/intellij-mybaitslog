@@ -54,6 +54,15 @@ public class ConfigUtil {
     }
 
     /**
+     * 获取关键字常量配置
+     *
+     * @return string
+     */
+    public static String getTotal() {
+        return PropertiesComponent.getInstance().getValue(KeyNameUtil.DB_TOTAL_KEY, KeyNameUtil.TOTAL);
+    }
+
+    /**
      * 获取配置
      *
      * @param value        值
@@ -71,6 +80,16 @@ public class ConfigUtil {
      */
     public static void setParameters(String value, String defaultValue) {
         PropertiesComponent.getInstance().setValue(KeyNameUtil.DB_PARAMETERS_KEY, null == value ? defaultValue : value);
+    }
+
+    /**
+     * 设置配置
+     *
+     * @param value        值
+     * @param defaultValue 默认
+     */
+    public static void setTotal(String value, String defaultValue) {
+        PropertiesComponent.getInstance().setValue(KeyNameUtil.DB_TOTAL_KEY, null == value ? defaultValue : value);
     }
 
     /**

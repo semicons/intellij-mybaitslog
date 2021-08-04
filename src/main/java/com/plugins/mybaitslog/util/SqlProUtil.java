@@ -64,10 +64,11 @@ public class SqlProUtil {
      * @param parametersLine 参数
      * @return
      */
-    public static String[] restoreSql(final String preparingLine, final String parametersLine) {
+    public static String[] restoreSql(final String preparingLine, final String parametersLine,final String totalLine) {
         final String PREPARING = ConfigUtil.getPreparing();
         final String PARAMETERS = ConfigUtil.getParameters();
-        return restoreSql(PREPARING, PARAMETERS, preparingLine, parametersLine);
+        final String TOTAL = ConfigUtil.getTotal();
+        return restoreSql(PREPARING, PARAMETERS, preparingLine, parametersLine,TOTAL,totalLine);
     }
 
     /**
@@ -77,11 +78,13 @@ public class SqlProUtil {
      * @param parametersLine 参数
      * @return
      */
-    public static String[] restoreSql(String PREPARING, final String PARAMETERS, final String preparingLine, final String parametersLine) {
+    public static String[] restoreSql(String PREPARING, final String PARAMETERS, final String preparingLine, final String parametersLine,String TOTAL,String totalLine) {
         final String[] preparingLineSplit = preparingLine.split(PREPARING);
         final String[] parametersLineSplit = parametersLine.split(PARAMETERS);
+//        final String[] totalSplit = totalLine.split(TOTAL);
         final Object[] preparing = getPreparing(preparingLineSplit);
         final Object[] parameters = getParameters(parametersLineSplit);
+//        final String total = getTotal(totalSplit);
         try {
             String sqlformatLike = ProcessLikeSymbol(String.format((String) preparing[1], parameters));
             final String sqlformat = ProcessSubstringSymbol(sqlformatLike, (HashMap<Object, Object>) preparing[2]);
@@ -89,7 +92,7 @@ public class SqlProUtil {
             if (!Ellipsis) {
                 result = BASIC_FORMATTER.format(result);
             }
-            return new String[]{(String) preparing[0], result};
+            return new String[]{(String) preparing[0], result,totalLine};
         } catch (Exception e) {
             final String result = BASIC_FORMATTER.format((String) preparing[1]);
             return new String[]{(String) preparing[0], result};
@@ -161,6 +164,13 @@ public class SqlProUtil {
             i++;
         }
         return new Object[]{preparing, d};
+    }
+
+    private static String getTotal(String[] totalLineSplit) {
+        if (totalLineSplit.length == 2) {
+            return KeyNameUtil.TOTAL.concat(totalLineSplit[1]);
+        }
+        return " ";
     }
 
     /**

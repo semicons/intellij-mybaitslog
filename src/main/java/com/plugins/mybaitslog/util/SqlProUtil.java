@@ -64,11 +64,11 @@ public class SqlProUtil {
      * @param parametersLine 参数
      * @return
      */
-    public static String[] restoreSql(final String preparingLine, final String parametersLine,final String totalLine) {
+    public static String[] restoreSql(final String preparingLine, final String parametersLine) {
         final String PREPARING = ConfigUtil.getPreparing();
         final String PARAMETERS = ConfigUtil.getParameters();
         final String TOTAL = ConfigUtil.getTotal();
-        return restoreSql(PREPARING, PARAMETERS, preparingLine, parametersLine,TOTAL,totalLine);
+        return restoreSql(PREPARING, PARAMETERS, preparingLine, parametersLine);
     }
 
     /**
@@ -78,7 +78,7 @@ public class SqlProUtil {
      * @param parametersLine 参数
      * @return
      */
-    public static String[] restoreSql(String PREPARING, final String PARAMETERS, final String preparingLine, final String parametersLine,String TOTAL,String totalLine) {
+    public static String[] restoreSql(String PREPARING, final String PARAMETERS, final String preparingLine, final String parametersLine) {
         final String[] preparingLineSplit = preparingLine.split(PREPARING);
         final String[] parametersLineSplit = parametersLine.split(PARAMETERS);
 //        final String[] totalSplit = totalLine.split(TOTAL);
@@ -92,7 +92,7 @@ public class SqlProUtil {
             if (!Ellipsis) {
                 result = BASIC_FORMATTER.format(result);
             }
-            return new String[]{(String) preparing[0], result,totalLine};
+            return new String[]{(String) preparing[0], result};
         } catch (Exception e) {
             final String result = BASIC_FORMATTER.format((String) preparing[1]);
             return new String[]{(String) preparing[0], result};

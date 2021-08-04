@@ -104,7 +104,7 @@ public class RestoreSqlForSelection extends AnAction {
             }
             if (StringUtils.isNotEmpty(preparingLine) && StringUtils.isNotEmpty(parametersLine)) {
                 //SQL还原
-                String[] restoreSql = SqlProUtil.restoreSql(preparingLine, parametersLine,total);
+                String[] restoreSql = SqlProUtil.restoreSql(preparingLine, parametersLine);
                 PrintlnUtil.println(project, KeyNameUtil.SQL_Line + restoreSql[0], ConsoleViewContentType.USER_INPUT);
                 //高亮显示
                 PrintlnUtil.printlnSqlType(project, restoreSql[1]);

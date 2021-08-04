@@ -83,16 +83,16 @@ public class PrintlnUtil {
         switch (sqlType) {
             case "insert":
             case "update":
-                println(project, rowLine, ConsoleViewContentType.SYSTEM_OUTPUT, true);
+                println(project, rowLine, new ConsoleViewContentType("styleName", new TextAttributes(new Color(0,215,255), null, null, null, Font.PLAIN)), true);
                 break;
             case "delete":
                 println(project,
                         rowLine,
-                        new ConsoleViewContentType("styleName", new TextAttributes(Color.RED, null, null, null, Font.PLAIN)),
+                        new ConsoleViewContentType("styleName", new TextAttributes(new Color(220,20,60), null, null, null, Font.PLAIN)),
                         true);
                 break;
             default:
-                println(project, rowLine, ConsoleViewContentType.ERROR_OUTPUT, true);
+                println(project, rowLine, new ConsoleViewContentType("styleName", new TextAttributes(new Color(152,118,170), null, null, null, Font.PLAIN)), true);
         }
     }
 }

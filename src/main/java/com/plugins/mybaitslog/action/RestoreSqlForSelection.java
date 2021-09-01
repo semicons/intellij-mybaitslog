@@ -41,12 +41,11 @@ public class RestoreSqlForSelection extends AnAction {
         ConfigUtil.setShowMyBatisLog(project);
         final String preparing = ConfigUtil.getPreparing();
         final String parameters = ConfigUtil.getParameters();
-        final String total = ConfigUtil.getTotal();
         if (StringUtils.isNotEmpty(selectedText)) {
             //分割每一行
             String[] selectedRowText = selectedText.split("\n");
-            if (isKeyWord(project, selectedText, selectedRowText, preparing, parameters,total)) {
-                setFormatSelectedText(project, selectedRowText, preparing, parameters,total);
+            if (isKeyWord(project, selectedText, selectedRowText, preparing, parameters)) {
+                setFormatSelectedText(project, selectedRowText, preparing, parameters);
             }
         }
     }
@@ -66,10 +65,10 @@ public class RestoreSqlForSelection extends AnAction {
      * @param preparing       关键字
      * @param parameters      关键字
      */
-    private boolean isKeyWord(Project project, String selectedText, String[] selectedRowText, String preparing, String parameters,String total) {
-        if (StringUtils.isNotBlank(selectedText) && selectedText.contains(preparing) && selectedText.contains(parameters) && selectedText.contains(total)) {
+    private boolean isKeyWord(Project project, String selectedText, String[] selectedRowText, String preparing, String parameters) {
+        if (StringUtils.isNotBlank(selectedText) && selectedText.contains(preparing) && selectedText.contains(parameters)) {
             //必须大于两行,MyBatis输出有两行关键信息
-            if (selectedRowText.length >= 3) {
+            if (selectedRowText.length >= 2) {
                 return true;
             }
         }
@@ -86,7 +85,7 @@ public class RestoreSqlForSelection extends AnAction {
      * @param preparing       关键字
      * @param parameters      关键字
      */
-    private void setFormatSelectedText(Project project, String[] selectedRowText, String preparing, String parameters,String total) {
+    private void setFormatSelectedText(Project project, String[] selectedRowText, String preparing, String parameters) {
         String preparingLine = "";
         String parametersLine = "";
         for (int i = 0; i < selectedRowText.length; ++i) {
